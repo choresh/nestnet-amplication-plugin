@@ -1,6 +1,6 @@
-# plugin-{your-plugin-name}
+# nestnet-amplication-plugin
 
-[![NPM Downloads](https://img.shields.io/npm/dt/plugin-{your-plugin-name})](https://www.npmjs.com/package/plugin-{your-plugin-name})
+[![NPM Downloads](https://img.shields.io/npm/dt/nestnet-amplication-plugin)](https://www.npmjs.com/package/nestnet-amplication-plugin)
 
 A short description of the plugin and its actions.
 
