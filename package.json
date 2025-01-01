@@ -1,7 +1,7 @@
 {
-  "name": "plugin-{your-plugin-name}",
+  "name": "nestnet-amplication-plugin",
   "version": "0.0.1",
-  "description": "Description of your plugin",
+  "description": "MestNet Amplication plugin",
   "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "npm run build",
