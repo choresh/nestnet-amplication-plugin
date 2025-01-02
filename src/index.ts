@@ -8,8 +8,14 @@ import type {
 } from "@amplication/code-gen-types";
 import { EventNames } from "@amplication/code-gen-types";
 import { resolve } from "path";
+import { execSync } from 'child_process';
 
-class ExamplePlugin implements AmplicationPlugin {
+interface CodeGenerationContext {
+  outputPath: string;
+  projectName: string;
+}
+
+class NestNetPlugin implements AmplicationPlugin {
   /**
    * This is mandatory function that returns an object with the event name. Each event can have before or/and after
    */
@@ -29,7 +35,8 @@ class ExamplePlugin implements AmplicationPlugin {
   beforeCreateServer(context: DsgContext, eventParams: CreateServerParams) {
     // Here you can manipulate the context or save any context variable for your after function.
     // You can also manipulate the eventParams so it will change the result of Amplication function.
-    // context.utils.skipDefaultBehavior = true; this will prevent the default behavior and skip our handler.
+    
+    context.utils.skipDefaultBehavior = true; // this will prevent the default behavior and skip our handler.
 
     return eventParams; // eventParams must return from before function. It will be used for the builder function.
   }
@@ -55,6 +62,22 @@ class ExamplePlugin implements AmplicationPlugin {
 
     return eventParams;
   }
+
+  async afterCodeGeneration(context: CodeGenerationContext): Promise<void> {
+    const { outputPath, projectName } = context;
+    try {
+      console.log('Running NestNet CLI...');
+      // const command = `nestnet --path ${outputPath} --project ${projectName}`;
+      const command = `nestnet`;
+      const result = execSync(command, {
+        stdio: 'inherit', // Ensure CLI output is visible
+      });
+      console.log('Running NestNet CLI completed, result:', result.toString());
+    } catch (error) {
+      console.error('Running NestNet CLI failed, error:', error);
+      throw error;
+    }
+  }
 }
 
-export default ExamplePlugin;
+export default NestNetPlugin;
